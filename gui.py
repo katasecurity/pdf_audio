@@ -5,12 +5,18 @@ import os
 from logic import read_pdf, count_words, count_chars, convert_to_mp3
 from history import save_to_history, load_history, clear_history
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> da0bc8ce3b0ead4b06839ed60e2df41077819a69
 current_text = ""
 current_filename = ""
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> da0bc8ce3b0ead4b06839ed60e2df41077819a69
 def on_open_pdf():
     global current_text, current_filename
 
@@ -69,6 +75,7 @@ def on_show_history():
 def on_clear_history():
     clear_history()
     history_box.delete("1.0", tk.END)
+<<<<<<< HEAD
     history_box.insert(tk.END, "History cleared.")
 
 
@@ -155,3 +162,6 @@ def start_app():
     history_box.pack(fill="both", expand=True, padx=12, pady=6)
 
     window.mainloop()
+=======
+    history_box.insert(tk.END, "History cleared.")
+>>>>>>> da0bc8ce3b0ead4b06839ed60e2df41077819a69
