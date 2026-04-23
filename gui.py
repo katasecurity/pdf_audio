@@ -6,7 +6,6 @@ import threading
 from logic import read_pdf, count_words, count_chars, convert_to_mp3
 from history import save_entry, load_history, clear_history
 
-# ── Palette ──────────────────────────────────────────────────────────────────
 BG          = "#f5f5f7"
 SURFACE     = "#ffffff"
 BORDER      = "#e0e0e5"
@@ -25,8 +24,6 @@ FONT        = ("SF Pro Display", 11) if os.name == "nt" else ("Helvetica Neue", 
 FONT_SMALL  = ("SF Pro Display", 9)  if os.name == "nt" else ("Helvetica Neue", 9)
 FONT_MONO   = ("SF Mono", 10)        if os.name == "nt" else ("Courier New", 10)
 
-
-# ── State ─────────────────────────────────────────────────────────────────────
 class AppState:
     text: str     = ""
     filename: str = ""
@@ -35,7 +32,6 @@ class AppState:
 state = AppState()
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
 def _btn(parent, text, command, bg, fg, width=14, padx=0, pady=0):
     b = tk.Button(
         parent, text=text, command=command,
@@ -65,7 +61,6 @@ def _status(dot_widget, label_widget, color, text):
     label_widget.config(text=text, fg=TEXT_SEC)
 
 
-# ── History window ─────────────────────────────────────────────────────────────
 def open_history_window(root):
     entries = load_history()
 
@@ -76,7 +71,6 @@ def open_history_window(root):
     win.resizable(False, False)
     win.grab_set()
 
-    # Header
     header = tk.Frame(win, bg=BG)
     header.pack(fill="x", padx=20, pady=(16, 0))
 
@@ -92,10 +86,8 @@ def open_history_window(root):
               relief="flat", bd=0, cursor="hand2",
               font=(FONT[0], 10)).pack(side="right", pady=2)
 
-    # Separator
     tk.Frame(win, bg=BORDER, height=1).pack(fill="x", padx=20, pady=10)
 
-    # Scrollable list
     container = tk.Frame(win, bg=BG)
     container.pack(fill="both", expand=True, padx=20, pady=(0, 16))
 
@@ -130,7 +122,6 @@ def open_history_window(root):
             row = tk.Frame(scroll_frame, bg=SURFACE, pady=10, padx=14)
             row.pack(fill="x", pady=(0, 6))
 
-            # Top row: filename + timestamp
             top = tk.Frame(row, bg=SURFACE)
             top.pack(fill="x")
             tk.Label(top, text=entry.get("filename", "—"), bg=SURFACE,
@@ -139,7 +130,6 @@ def open_history_window(root):
             tk.Label(top, text=entry.get("timestamp", ""), bg=SURFACE,
                      fg=TEXT_HINT, font=FONT_SMALL).pack(side="right")
 
-            # Bottom row: stats
             meta_text = f"Слов: {entry.get('words', 0)}   ·   Знаков: {entry.get('chars', 0)}"
             tk.Label(row, text=meta_text, bg=SURFACE, fg=TEXT_SEC,
                      font=FONT_SMALL, anchor="w").pack(fill="x", pady=(3, 0))
@@ -156,7 +146,6 @@ def open_history_window(root):
     win.bind("<Destroy>", lambda e: canvas.unbind_all("<MouseWheel>"))
 
 
-# ── Main app ──────────────────────────────────────────────────────────────────
 def start_app():
     root = tk.Tk()
     root.title("Smart Reader")
@@ -164,12 +153,6 @@ def start_app():
     root.minsize(520, 420)
     root.configure(bg=BG)
 
-    # ── Layout skeleton ───────────────────────────────────────────────────────
-    # top: header stats bar
-    # mid: text area (expands)
-    # bot: action bar with Open | Convert | [History]
-
-    # Header
     header_frame = tk.Frame(root, bg=BG, pady=0)
     header_frame.pack(fill="x", padx=20, pady=(14, 0))
 
@@ -180,7 +163,6 @@ def start_app():
                          fg=TEXT_HINT, font=FONT_SMALL)
     stats_lbl.pack(side="right", pady=2)
 
-    # Text area card
     card = _card(root, highlightbackground=BORDER,
                  highlightthickness=1)
     card.pack(fill="both", expand=True, padx=20, pady=12)
@@ -200,7 +182,6 @@ def start_app():
                              relief="flat", bd=0, width=10)
     text_box.configure(yscrollcommand=scrollbar.set)
 
-    # Status bar inside card
     status_bar = tk.Frame(card, bg=SURFACE)
     status_bar.pack(fill="x", padx=0)
     tk.Frame(status_bar, bg=BORDER, height=1).pack(fill="x")
@@ -217,7 +198,6 @@ def start_app():
                           anchor="w")
     status_lbl.pack(side="left", padx=(5, 0))
 
-    # ── Bottom action bar ─────────────────────────────────────────────────────
     bottom = tk.Frame(root, bg=BG)
     bottom.pack(fill="x", padx=20, pady=(0, 16))
 
@@ -227,7 +207,6 @@ def start_app():
     right_area = tk.Frame(bottom, bg=BG)
     right_area.pack(side="right")
 
-    # ── Actions ───────────────────────────────────────────────────────────────
     def set_text(text):
         text_box.config(state="normal")
         text_box.delete("1.0", tk.END)
@@ -294,7 +273,6 @@ def start_app():
 
         threading.Thread(target=run, daemon=True).start()
 
-    # ── Buttons ───────────────────────────────────────────────────────────────
     btn_open = _btn(
         left_btns,
         text="Открыть PDF",

@@ -27,4 +27,4 @@ def count_chars(text):
 def convert_to_mp3(text, output_file="result.mp3", language="ru"):
     tts = gTTS(text=text, lang=language)
     tts.save(output_file)
-    return output_filex
+    return output_file
