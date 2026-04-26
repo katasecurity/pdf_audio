@@ -374,7 +374,7 @@ def start_app():
             set_status("success", f"Сохранено: result.mp3{tag}")
             msg = "Файл result.mp3 успешно сохранён."
             if is_fallback:
-                msg += "\n\n⚠ Кыргызский не поддерживается gTTS. (выбран русский)"
+                msg += "\n\n Кыргызский не поддерживается gTTS. (выбран русский)"
             messagebox.showinfo("Готово", msg)
 
         def err(msg):
