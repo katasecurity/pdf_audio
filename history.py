@@ -22,7 +22,7 @@ def save_entry(filename, words, chars, language="en", preview="", audio_path=Non
         "language":  language,
         "words":     words,
         "chars":     chars,
-        "preview":   preview[:120].replace("\n", " ").strip(),
+        "preview":   preview[:120].replace(" ", " ").strip(),
         "timestamp": datetime.now().strftime("%d.%m.%Y  %H:%M"),
         "audio":     audio_path,
     })
