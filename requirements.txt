@@ -1,2 +1,4 @@
 PyPDF2==3.0.1
 gTTS==2.5.1
+langdetect==1.0.9
+deep-translator==1.11.4
